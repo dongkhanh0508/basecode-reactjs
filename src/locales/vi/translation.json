@@ -1,0 +1,31 @@
+{
+  "common": {
+    "dashboard": "Bảng điều khiển",
+    "settings": "Cài đặt",
+    "profile": "Cá nhân",
+    "languages": "Ngôn ngữ",
+    "btnClose": "Đóng",
+    "login": "ĐĂNG NHẬP",
+    "home": "Trang chủ",
+    "backHomePage": "Trở về",
+    "business": "Kinh doanh",
+    "system": "Hệ thống",
+    "asset": "Phương tiện",
+    "logout": "Đắng xuất"
+  },
+  "login": {
+    "welcome": "Chào mừng bạn đến với Giờ Công",
+    "title": "Đăng nhập vào hệ thống",
+    "options": "Nhập thông tin tài khoản của bạn vào ô bên dưới",
+    "or": "Hoặc",
+    "username": "Tên đăng nhập",
+    "password": "Mật khẩu",
+    "btnLogin": "Đăng nhập",
+    "errorUsername": "Vui lòng điền tên đăng nhập",
+    "errorPassword": "Vui lòng điền mật khẩu",
+    "loginSuccess": "Bạn đã đăng nhập thành công.",
+    "logoutSuccess": "Bạn đã đăng xuất thành công.",
+    "userPassInvalid": "Tên đăng nhập hoặc mật khẩu không chính xác !!!",
+    "sectionTimeout": "Phiên làm việc hết hạn, vui lòng đăng nhập lại!!!"
+  }
+}
