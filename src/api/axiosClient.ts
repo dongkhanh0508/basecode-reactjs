@@ -6,7 +6,7 @@ import i18n from 'translation/i18n';
 // Set up default config for http requests here
 
 const axiosClient = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'https://stg-api.tradezonemap.com/api/v1.0',
+  baseURL: process.env.REACT_APP_API_URL || 'https://api-demo.unikrowd.com/api/v1.0',
   headers: {
     'content-type': 'multipart/form-data',
   },

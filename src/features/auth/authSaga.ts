@@ -4,20 +4,18 @@ import authApi from 'api/authApi';
 import { AuthRequest, AuthResponse, User } from 'models';
 import { call, fork, put, take } from 'redux-saga/effects';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
+import accountApi from 'api/accountApi';
 import { authAction } from './authSlice';
 
 function* handleLogin(payload: AuthRequest) {
   try {
     const rs: AuthResponse = yield call(authApi.authUsernamePass, payload);
     const decoded = jwtDecode<JwtPayload>(rs.token);
-    const key = process.env.REACT_APP_NAME_IDENTIFIER;
-    const user: User = {
-      username: decoded['nameid'],
-      role: decoded['role'],
-    } as User;
-    localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('access_token', rs.token);
     localStorage.setItem('time_expire', decoded.exp?.toString() || '');
+    const userId = decoded['Id'];
+    const user: User = yield call(accountApi.getById, userId);
+    localStorage.setItem('user', JSON.stringify(user));
     yield put(authAction.loginSuccess(user));
   } catch (error) {
     yield put(authAction.loginFailed(''));

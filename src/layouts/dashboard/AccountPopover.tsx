@@ -79,7 +79,7 @@ export default function AccountPopover() {
             {user?.fullname}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {user?.role === 1 ? 'brand manager' : 'admin'}
+            {user?.role === 2 ? 'brand manager' : 'admin'}
           </Typography>
         </Box>
 

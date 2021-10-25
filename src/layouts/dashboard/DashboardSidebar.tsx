@@ -13,6 +13,7 @@ import {
   CardActionArea,
 } from '@mui/material';
 // hooks
+import { getCurrentUser } from 'utils/common';
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 // components
 import Logo from '../../components/Logo';
@@ -20,7 +21,7 @@ import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
 //
 import { MHidden } from '../../components/@material-extend';
-import sidebarConfig from './SidebarConfig';
+import SidebarConfig from './SidebarConfig';
 
 // ----------------------------------------------------------------------
 
@@ -96,6 +97,8 @@ type DashboardSidebarProps = {
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: DashboardSidebarProps) {
   const { pathname } = useLocation();
+  const sidebarConfig = SidebarConfig();
+  const user = getCurrentUser();
 
   const { isCollapse, collapseClick, collapseHover, onToggleCollapse, onHoverEnter, onHoverLeave } =
     useCollapseDrawer();
@@ -149,10 +152,10 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
               <Avatar alt="My Avatar" src="/static/mock-images/avatars/avatar_default.jpg" />
               <Box sx={{ ml: 2 }}>
                 <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                  displayName
+                  {user?.username}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  role
+                  {user?.role}
                 </Typography>
               </Box>
             </AccountStyle>

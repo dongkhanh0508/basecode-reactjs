@@ -18,7 +18,7 @@ export default function App() {
       <ThemePrimaryColor>
         <RtlLayout>
           <NotistackProvider>
-            <Settings />
+            {/* <Settings /> */}
             <ScrollToTop />
             <Router />
           </NotistackProvider>

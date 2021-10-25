@@ -6,6 +6,7 @@ import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // components
 import LoadingScreen from '../components/LoadingScreen';
+
 // ----------------------------------------------------------------------
 
 const Loadable = (Component: any) => (props: any) => {
@@ -58,6 +59,36 @@ export default function Router() {
             { path: 'six', element: <PageSix /> },
           ],
         },
+        {
+          path: 'campaigns',
+          children: [
+            { path: '/', element: <CampaignListPage /> },
+            { path: 'add', element: <AddEditCampaignPage /> },
+            { path: 'edit/:campaignId', element: <AddEditCampaignPage /> },
+            { path: 'details/:campaignId', element: <CampaignDetailsPage /> },
+            { path: 'details/:campaignId/:tag', element: <CampaignDetailsPage /> },
+          ],
+        },
+        {
+          path: 'packages',
+          children: [
+            { path: '/', element: <ComingSoon /> },
+            { path: 'add', element: <AddEditCampaignPackagePage /> },
+            { path: 'add/:campaignId', element: <AddEditCampaignPackagePage /> },
+            { path: 'edit/:packageId', element: <AddEditCampaignPackagePage /> },
+            { path: 'edit/:packageId/:campaignId', element: <AddEditCampaignPackagePage /> },
+          ],
+        },
+        {
+          path: 'stages',
+          children: [
+            { path: '/', element: <ComingSoon /> },
+            { path: 'add', element: <AddEditStagePage /> },
+            { path: 'add/:campaignId', element: <AddEditStagePage /> },
+            { path: 'edit/:stageId', element: <AddEditStagePage /> },
+            { path: 'edit/:stageId/:campaignId', element: <AddEditStagePage /> },
+          ],
+        },
       ],
     },
 
@@ -95,3 +126,15 @@ const LandingPage = Loadable(lazy(() => import('../pages/LandingPage')));
 
 // new
 const Login = Loadable(lazy(() => import('features/auth/Login')));
+const CampaignListPage = Loadable(lazy(() => import('features/campaign/pages/CampaignListPage')));
+const AddEditCampaignPage = Loadable(
+  lazy(() => import('features/campaign/pages/AddEdiitCampaignPage'))
+);
+const CampaignDetailsPage = Loadable(
+  lazy(() => import('features/campaign/pages/CampaignDetailsPage'))
+);
+const ComingSoon = Loadable(lazy(() => import('pages/ComingSoon')));
+const AddEditCampaignPackagePage = Loadable(
+  lazy(() => import('features/package/pages/AddEditPackagePage'))
+);
+const AddEditStagePage = Loadable(lazy(() => import('features/stage/pages/AddEditStagePage')));

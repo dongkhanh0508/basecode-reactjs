@@ -100,7 +100,7 @@ function SetColor(themeColor: ThemeColor) {
 const initialState: SettingsContextProps = {
   themeMode: 'light',
   themeDirection: 'ltr',
-  themeColor: 'default',
+  themeColor: 'purple',
   themeStretch: false,
   onChangeMode: () => {},
   onChangeDirection: () => {},
@@ -120,8 +120,8 @@ function SettingsProvider({ children }: SettingsProviderProps) {
   const [settings, setSettings] = useLocalStorage('settings', {
     themeMode: 'light',
     themeDirection: 'ltr',
-    themeColor: 'default',
-    themeStretch: false,
+    themeColor: 'purple',
+    themeStretch: true,
   });
 
   const onChangeMode = (event: React.ChangeEvent<HTMLInputElement>) => {
