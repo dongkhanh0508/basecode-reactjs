@@ -25,7 +25,6 @@ export default function AddEditCampaignPage() {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const filter = useAppSelector(selectFilter);
-  const user = getCurrentUser();
   useEffect(() => {
     if (!campaignId) return;
 

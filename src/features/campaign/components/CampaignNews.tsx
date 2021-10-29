@@ -1,7 +1,8 @@
+import plusFill from '@iconify/icons-eva/plus-fill';
+import { Icon } from '@iconify/react';
 import {
   Box,
   Button,
-  Card,
   CardHeader,
   Dialog,
   DialogActions,
@@ -10,62 +11,58 @@ import {
   DialogTitle,
   Paper,
 } from '@mui/material';
-import plusFill from '@iconify/icons-eva/plus-fill';
-import { CustomTypography, ShopProductList } from 'components/custom';
-import { Campaign, CampaignRisk, Risk } from 'models';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import editFill from '@iconify/icons-eva/edit-fill';
-import { Icon } from '@iconify/react';
-import { PATH_DASHBOARD } from 'routes/paths';
-import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
-import { fDateTimeSuffix3 } from 'utils/formatTime';
-import riskApi from 'api/riskApi';
-import { useSnackbar } from 'notistack';
+import newsApi from 'api/newsApi';
 import { useAppDispatch } from 'app/hooks';
-import { riskActions } from 'features/risk/riskSlice';
+import { CustomTypography } from 'components/custom';
 import GridList from 'components/custom/GridList';
-import Images from 'constants/image';
 import EmptyContent from 'components/EmptyContent';
+import Markdown from 'components/Markdown';
+import Images from 'constants/image';
+import { Campaign, News } from 'models';
+import { useSnackbar } from 'notistack';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { PATH_DASHBOARD } from 'routes/paths';
 import { campaignActions } from '../campaignSlice';
 
-interface CampaignRisksProps {
+interface NewsProps {
   campaign: Campaign;
 }
 
-export default function Risks({ campaign }: CampaignRisksProps) {
+export default function CampaignNews({ campaign }: NewsProps) {
   const { t } = useTranslation();
   const [popup, setPopup] = useState(false);
-  const [selected, setSelected] = useState<Risk>();
+  const [selected, setSelected] = useState<News>();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [confirmDelete, setConfirmDelete] = useState(false);
   const dispatch = useAppDispatch();
   const handelViewClick = (id: number | string) => {
-    const risk = campaign.campaignRisks.find((x) => x.risk.id === id);
-    if (risk !== undefined) {
-      setSelected(risk.risk);
+    const news = campaign.news.find((x) => x.id === id);
+    if (news !== undefined) {
+      setSelected(news);
       setPopup(true);
     }
   };
   const handelDeleteClick = (id: number | string) => {
-    const risk = campaign.campaignRisks.find((x) => x.risk.id === id);
-    if (risk !== undefined) {
-      setSelected(risk.risk);
+    const news = campaign.news.find((x) => x.id === id);
+    if (news !== undefined) {
+      setSelected(news);
       setConfirmDelete(true);
     }
   };
   const handelConfirmRemoveClick = async () => {
     try {
-      await riskApi.remove(campaign.id, selected?.id || 0);
-      enqueueSnackbar(`${selected?.name} ${t('common.deleteSuccess')}`, {
+      await newsApi.remove(selected?.id || 0);
+      enqueueSnackbar(`${selected?.title} ${t('common.deleteSuccess')}`, {
         variant: 'success',
       });
       setSelected(undefined);
       setConfirmDelete(false);
       dispatch(campaignActions.setRefresh());
     } catch (error) {
-      enqueueSnackbar(`${selected?.name} ${t('common.error')}`, { variant: 'error' });
+      enqueueSnackbar(`${selected?.title} ${t('common.error')}`, { variant: 'error' });
     }
   };
   return (
@@ -75,15 +72,15 @@ export default function Risks({ campaign }: CampaignRisksProps) {
         action={
           <Button
             component={RouterLink}
-            to={`${PATH_DASHBOARD.risk.add}/${campaign?.id}`}
+            to={`${PATH_DASHBOARD.news.add}/${campaign?.id}`}
             startIcon={<Icon icon={plusFill} />}
           >
-            {t('pages.risk.add')}
+            {t('pages.news.add')}
           </Button>
         }
         style={{ margin: '0px', padding: '0px' }}
       />
-      {campaign.campaignRisks.length === 0 ? (
+      {campaign.news.length === 0 ? (
         <EmptyContent
           title={t('common.noData')}
           sx={{
@@ -92,10 +89,10 @@ export default function Risks({ campaign }: CampaignRisksProps) {
         />
       ) : (
         <GridList
-          products={campaign.campaignRisks.map((x) => ({
-            id: x.risk.id,
-            name: x.risk.name,
-            description: x.risk.description,
+          products={campaign.news.map((x) => ({
+            id: x.id,
+            name: x.title,
+            description: x.content,
           }))}
           isLoad={false}
           onSelectProduct={handelDeleteClick}
@@ -104,17 +101,17 @@ export default function Risks({ campaign }: CampaignRisksProps) {
           onAddProduct={() => {
             navigate(`${PATH_DASHBOARD.package.add}/${campaign?.id}`);
           }}
-          lg={6}
-          md={6}
-          sm={12}
-          xs={12}
-          isCardContent={true}
-          defaultImage={Images.RISK}
+          lg={4}
+          md={4}
+          sm={6}
+          xs={6}
+          isCardContent={false}
+          defaultImage={Images.NEWS}
         />
       )}
 
-      <Dialog open={popup} onClose={() => setPopup(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>{selected?.name}</DialogTitle>
+      <Dialog open={popup} onClose={() => setPopup(false)} maxWidth="lg" fullWidth>
+        <DialogTitle>{selected?.title}</DialogTitle>
         <DialogContent style={{ marginTop: '15px' }}>
           <DialogContentText>
             <Paper
@@ -124,9 +121,10 @@ export default function Risks({ campaign }: CampaignRisksProps) {
                 bgcolor: 'background.neutral',
               }}
             >
-              <CustomTypography title={t('common.id')} content={selected?.id} />
-              <CustomTypography title={t('pages.risk.name')} content={selected?.name} />
-              <CustomTypography title={t('common.description')} content={selected?.description} />
+              <CustomTypography title={t('pages.news.name')} content={selected?.title} />
+              <Box sx={{ p: 3 }}>
+                <Markdown children={selected?.content || ''} />
+              </Box>
             </Paper>
           </DialogContentText>
         </DialogContent>
@@ -148,7 +146,7 @@ export default function Risks({ campaign }: CampaignRisksProps) {
         <DialogTitle>{t('common.titleConfirm')}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {`${selected?.name} ${t('common.titleRemoveEnd')}`}
+            {`${selected?.title} ${t('common.titleRemoveEnd')}`}
             <br />
             {t('common.canRevert')}
           </DialogContentText>

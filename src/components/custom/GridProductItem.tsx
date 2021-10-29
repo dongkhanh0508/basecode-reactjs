@@ -21,14 +21,20 @@ type GridProductItemProps = {
   product: GridItemObj;
   onSelect?: (id: number | string) => void;
   onView?: (id: number | string) => void;
+  defaultImage?: string;
 };
 
-export default function GridProductItem({ product, onSelect, onView }: GridProductItemProps) {
+export default function GridProductItem({
+  product,
+  onSelect,
+  onView,
+  defaultImage,
+}: GridProductItemProps) {
   const { t } = useTranslation();
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        <ProductImgStyle alt="error" src={product?.image || Images.PACKAGE} />
+        <ProductImgStyle alt="error" src={product?.image || defaultImage || Images.PACKAGE} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>

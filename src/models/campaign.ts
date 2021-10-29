@@ -1,5 +1,5 @@
 import { DateRange } from '@mui/lab/DateRangePicker/RangeTypes';
-import { CampaignPackage } from 'models';
+import { CampaignLocation, CampaignPackage, News } from 'models';
 import { Stage } from './stage';
 import { CampaignRisk } from './campaignRisk';
 
@@ -27,4 +27,6 @@ export interface Campaign {
   campaignRisks: CampaignRisk[];
   campaignPackages: CampaignPackage[];
   campaignStages: Stage[];
+  campaignLocations: CampaignLocation[];
+  news: News[];
 }

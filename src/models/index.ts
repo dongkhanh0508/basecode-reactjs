@@ -5,3 +5,5 @@ export * from './campaignPackage';
 export * from './campaignRisk';
 export * from './enum';
 export * from './stage';
+export * from './campaignLocation';
+export * from './news';

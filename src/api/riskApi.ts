@@ -1,25 +1,25 @@
-import { PaginationRequest, Risk, Response } from 'models';
+import { CampaignRisk, Risk } from 'models';
 import axiosClient from './axiosClient';
 
 const riskApi = {
-  getAll(params: PaginationRequest): Promise<Response<Risk>> {
-    const url = '/campaigns/risks';
-    return axiosClient.get(url, { params });
+  getAll(campaignId: number): Promise<CampaignRisk[]> {
+    const url = `/campaigns/${campaignId}/risks`;
+    return axiosClient.get(url);
   },
-  remove(id: number): Promise<Risk> {
-    const url = `/campaigns/risks/${id}`;
+  remove(campaignId: number, riskId: number): Promise<CampaignRisk> {
+    const url = `/campaigns/${campaignId}/risks/${riskId}`;
     return axiosClient.delete(url);
   },
-  getById(id: string): Promise<Risk> {
-    const url = `/campaigns/risks/${id}`;
+  getById(campaignId: number, riskId: number): Promise<CampaignRisk> {
+    const url = `/campaigns/${campaignId}/risks/${riskId}`;
     return axiosClient.get(url);
   },
   update(id: string, data: Risk): Promise<Risk> {
     const url = `/campaigns/risks/${id}`;
     return axiosClient.put(url, data);
   },
-  add(data: Risk): Promise<Risk> {
-    const url = '/campaigns/risks';
+  add(campaignId: number, data: Risk): Promise<Risk> {
+    const url = `/campaigns/${campaignId}/risks`;
     return axiosClient.post(url, data);
   },
 };

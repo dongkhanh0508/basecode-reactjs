@@ -1,7 +1,8 @@
+import plusFill from '@iconify/icons-eva/plus-fill';
+import { Icon } from '@iconify/react';
 import {
   Box,
   Button,
-  Card,
   CardHeader,
   Dialog,
   DialogActions,
@@ -10,62 +11,57 @@ import {
   DialogTitle,
   Paper,
 } from '@mui/material';
-import plusFill from '@iconify/icons-eva/plus-fill';
-import { CustomTypography, ShopProductList } from 'components/custom';
-import { Campaign, CampaignRisk, Risk } from 'models';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import editFill from '@iconify/icons-eva/edit-fill';
-import { Icon } from '@iconify/react';
-import { PATH_DASHBOARD } from 'routes/paths';
-import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
-import { fDateTimeSuffix3 } from 'utils/formatTime';
-import riskApi from 'api/riskApi';
-import { useSnackbar } from 'notistack';
+import locationApi from 'api/locationApi';
 import { useAppDispatch } from 'app/hooks';
-import { riskActions } from 'features/risk/riskSlice';
+import { CustomTypography } from 'components/custom';
 import GridList from 'components/custom/GridList';
-import Images from 'constants/image';
 import EmptyContent from 'components/EmptyContent';
+import Images from 'constants/image';
+import { Campaign, Location } from 'models';
+import { useSnackbar } from 'notistack';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { PATH_DASHBOARD } from 'routes/paths';
 import { campaignActions } from '../campaignSlice';
 
-interface CampaignRisksProps {
+interface CampaignLocationsProps {
   campaign: Campaign;
 }
 
-export default function Risks({ campaign }: CampaignRisksProps) {
+export default function Locations({ campaign }: CampaignLocationsProps) {
   const { t } = useTranslation();
   const [popup, setPopup] = useState(false);
-  const [selected, setSelected] = useState<Risk>();
+  const [selected, setSelected] = useState<Location>();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [confirmDelete, setConfirmDelete] = useState(false);
   const dispatch = useAppDispatch();
   const handelViewClick = (id: number | string) => {
-    const risk = campaign.campaignRisks.find((x) => x.risk.id === id);
-    if (risk !== undefined) {
-      setSelected(risk.risk);
+    const location = campaign.campaignLocations.find((x) => x.location.id === id);
+    if (location !== undefined) {
+      setSelected(location.location);
       setPopup(true);
     }
   };
   const handelDeleteClick = (id: number | string) => {
-    const risk = campaign.campaignRisks.find((x) => x.risk.id === id);
-    if (risk !== undefined) {
-      setSelected(risk.risk);
+    const location = campaign.campaignLocations.find((x) => x.location.id === id);
+    if (location !== undefined) {
+      setSelected(location.location);
       setConfirmDelete(true);
     }
   };
   const handelConfirmRemoveClick = async () => {
     try {
-      await riskApi.remove(campaign.id, selected?.id || 0);
-      enqueueSnackbar(`${selected?.name} ${t('common.deleteSuccess')}`, {
+      await locationApi.remove(campaign.id, selected?.id || 0);
+      enqueueSnackbar(`${selected?.address} ${t('common.deleteSuccess')}`, {
         variant: 'success',
       });
       setSelected(undefined);
       setConfirmDelete(false);
       dispatch(campaignActions.setRefresh());
     } catch (error) {
-      enqueueSnackbar(`${selected?.name} ${t('common.error')}`, { variant: 'error' });
+      enqueueSnackbar(`${selected?.address} ${t('common.error')}`, { variant: 'error' });
     }
   };
   return (
@@ -75,15 +71,15 @@ export default function Risks({ campaign }: CampaignRisksProps) {
         action={
           <Button
             component={RouterLink}
-            to={`${PATH_DASHBOARD.risk.add}/${campaign?.id}`}
+            to={`${PATH_DASHBOARD.location.add}/${campaign?.id}`}
             startIcon={<Icon icon={plusFill} />}
           >
-            {t('pages.risk.add')}
+            {t('pages.location.add')}
           </Button>
         }
         style={{ margin: '0px', padding: '0px' }}
       />
-      {campaign.campaignRisks.length === 0 ? (
+      {campaign.campaignLocations.length === 0 ? (
         <EmptyContent
           title={t('common.noData')}
           sx={{
@@ -92,10 +88,10 @@ export default function Risks({ campaign }: CampaignRisksProps) {
         />
       ) : (
         <GridList
-          products={campaign.campaignRisks.map((x) => ({
-            id: x.risk.id,
-            name: x.risk.name,
-            description: x.risk.description,
+          products={campaign.campaignLocations.map((x) => ({
+            id: x.location.id,
+            name: x.location.address,
+            description: `${x.location.address}, ${x.location.ward}, ${x.location.district}, ${x.location.city}`,
           }))}
           isLoad={false}
           onSelectProduct={handelDeleteClick}
@@ -109,12 +105,12 @@ export default function Risks({ campaign }: CampaignRisksProps) {
           sm={12}
           xs={12}
           isCardContent={true}
-          defaultImage={Images.RISK}
+          defaultImage={Images.LOCATION}
         />
       )}
 
       <Dialog open={popup} onClose={() => setPopup(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>{selected?.name}</DialogTitle>
+        <DialogTitle>{selected?.address}</DialogTitle>
         <DialogContent style={{ marginTop: '15px' }}>
           <DialogContentText>
             <Paper
@@ -125,8 +121,8 @@ export default function Risks({ campaign }: CampaignRisksProps) {
               }}
             >
               <CustomTypography title={t('common.id')} content={selected?.id} />
-              <CustomTypography title={t('pages.risk.name')} content={selected?.name} />
-              <CustomTypography title={t('common.description')} content={selected?.description} />
+              <CustomTypography title={t('pages.location.name')} content={selected?.address} />
+              <CustomTypography title={t('common.description')} content={selected?.city} />
             </Paper>
           </DialogContentText>
         </DialogContent>
@@ -148,7 +144,7 @@ export default function Risks({ campaign }: CampaignRisksProps) {
         <DialogTitle>{t('common.titleConfirm')}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {`${selected?.name} ${t('common.titleRemoveEnd')}`}
+            {`${selected?.address} ${t('common.titleRemoveEnd')}`}
             <br />
             {t('common.canRevert')}
           </DialogContentText>

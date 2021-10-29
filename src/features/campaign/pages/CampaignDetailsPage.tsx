@@ -14,6 +14,8 @@ import { selectRefresh } from '../campaignSlice';
 // eslint-disable-next-line import/no-named-as-default
 import CampaignDetails from '../components/CampaignDetails';
 import CampaignStage from '../components/CampaignStage';
+import Locations from '../components/Locations';
+import CampaignNews from '../components/CampaignNews';
 import Packages from '../components/Packages';
 import Risks from '../components/Risks';
 
@@ -71,11 +73,15 @@ export default function CampaignDetailsPage() {
             <TabPanel value="2">
               {Boolean(campaign) && <Packages campaign={campaign as Campaign} />}
             </TabPanel>
-            <TabPanel value="3">Vi tri</TabPanel>
+            <TabPanel value="3">
+              {Boolean(campaign) && <Locations campaign={campaign as Campaign} />}
+            </TabPanel>
             <TabPanel value="4">
               {Boolean(campaign) && <CampaignStage campaign={campaign as Campaign} />}
             </TabPanel>
-            <TabPanel value="5">Item 5</TabPanel>
+            <TabPanel value="5">
+              {Boolean(campaign) && <CampaignNews campaign={campaign as Campaign} />}
+            </TabPanel>
             <TabPanel value="6">
               {Boolean(campaign) && <Risks campaign={campaign as Campaign} />}
             </TabPanel>

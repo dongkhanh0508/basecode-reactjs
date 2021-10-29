@@ -45,4 +45,22 @@ export const PATH_DASHBOARD = {
     edit: path(ROOTS_DASHBOARD, '/stages/edit'),
     details: path(ROOTS_DASHBOARD, '/stages/details'),
   },
+  risk: {
+    root: path(ROOTS_DASHBOARD, '/risks'),
+    add: path(ROOTS_DASHBOARD, '/risks/add'),
+    edit: path(ROOTS_DASHBOARD, '/risks/edit'),
+    details: path(ROOTS_DASHBOARD, '/risks/details'),
+  },
+  location: {
+    root: path(ROOTS_DASHBOARD, '/locations'),
+    add: path(ROOTS_DASHBOARD, '/locations/add'),
+    edit: path(ROOTS_DASHBOARD, '/locations/edit'),
+    details: path(ROOTS_DASHBOARD, '/locations/details'),
+  },
+  news: {
+    root: path(ROOTS_DASHBOARD, '/news'),
+    add: path(ROOTS_DASHBOARD, '/news/add'),
+    edit: path(ROOTS_DASHBOARD, '/news/edit'),
+    details: path(ROOTS_DASHBOARD, '/news/details'),
+  },
 };

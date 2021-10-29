@@ -94,6 +94,7 @@ export default function GridList({
               onView={() => {
                 if (onViewProduct) onViewProduct(product.id);
               }}
+              defaultImage={defaultImage}
             />
           )}
         </Grid>

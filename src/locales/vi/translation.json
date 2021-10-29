@@ -49,7 +49,8 @@
     "id": "#ID",
     "errorImage": "Ảnh bị lỗi !!!",
     "noData": "Không có dữ liệu",
-    "to": "đến"
+    "to": "đến",
+    "writeSomeThing": "Viết một cái gì đó tuyệt vời"
   },
   "login": {
     "welcome": "Chào mừng bạn đến với Unikrowds",
@@ -103,6 +104,24 @@
       "percents": "Tỉ lệ chia sẻ",
       "info": "Thông tin gai đoạn",
       "add": "Thêm giai đoạn"
+    },
+    "risk": {
+      "name": "Tên rủi ro",
+      "riskType": "Loại rủi ro",
+      "info": "Thông tin rủi ro",
+      "add": "Thêm rủi ro"
+    },
+    "location": {
+      "name": "Tên địa điểm",
+      "riskType": "Loại rủi ro",
+      "info": "Thông tin rủi ro",
+      "add": "Thêm rủi ro"
+    },
+    "news": {
+      "name": "Tên tin tức",
+      "info": "Thông tin tin tức",
+      "add": "Thêm tin tức",
+      "content": "Nội dung bài viết"
     }
   },
   "enum": {

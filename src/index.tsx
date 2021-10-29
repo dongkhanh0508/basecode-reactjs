@@ -2,6 +2,9 @@
 import 'simplebar/src/simplebar.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import './utils/highlight';
+import 'react-quill/dist/quill.snow.css';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import ReactDOM from 'react-dom';
 import { StrictMode } from 'react';

@@ -5,5 +5,7 @@ const Images = {
   PACKAGE: '/static/images/campaign/package.svg',
   ADD: '/static/images/campaign/add.svg',
   RISK: '/static/images/campaign/risk.svg',
+  LOCATION: '/static/images/campaign/location.svg',
+  NEWS: '/static/images/campaign/news.svg',
 };
 export default Images;

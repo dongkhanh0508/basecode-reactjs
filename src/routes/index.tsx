@@ -1,6 +1,7 @@
 import { Suspense, lazy } from 'react';
 import { Navigate, useRoutes, useLocation } from 'react-router-dom';
 // layouts
+import AddEditNewsPage from 'features/news/pages/AddEditNewsPage';
 import MainLayout from '../layouts/main';
 import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
@@ -89,6 +90,36 @@ export default function Router() {
             { path: 'edit/:stageId/:campaignId', element: <AddEditStagePage /> },
           ],
         },
+        {
+          path: 'risks',
+          children: [
+            { path: '/', element: <ComingSoon /> },
+
+            { path: 'add/:campaignId', element: <AddEditRiskPage /> },
+
+            { path: 'edit/:riskId/:campaignId', element: <AddEditRiskPage /> },
+          ],
+        },
+        {
+          path: 'locations',
+          children: [
+            { path: '/', element: <ComingSoon /> },
+
+            { path: 'add/:campaignId', element: <ComingSoon /> },
+
+            { path: 'edit/:locationId/:campaignId', element: <ComingSoon /> },
+          ],
+        },
+        {
+          path: 'news',
+          children: [
+            { path: '/', element: <ComingSoon /> },
+
+            { path: 'add/:campaignId', element: <AddEditNewsPage /> },
+
+            { path: 'edit/:locationId/:campaignId', element: <ComingSoon /> },
+          ],
+        },
       ],
     },
 
@@ -138,3 +169,4 @@ const AddEditCampaignPackagePage = Loadable(
   lazy(() => import('features/package/pages/AddEditPackagePage'))
 );
 const AddEditStagePage = Loadable(lazy(() => import('features/stage/pages/AddEditStagePage')));
+const AddEditRiskPage = Loadable(lazy(() => import('features/risk/pages/AddEditRiskPage')));
